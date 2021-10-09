@@ -11,10 +11,6 @@ class AddressBook
      string contactNum;
 
      public:
-     int sizeOfName;
-     int sizeOfNum = sizeof(sizeOfNum); 
-
-
      void getNameAndNumber(string fName, string lName, string userNum)
      {
           firstName = fName;
@@ -29,7 +25,7 @@ class AddressBook
 };
 int main()
 {
-     // system("cls");
+     system("cls");
      int decision = 0;
      int opt;
      AddressBook userOne;
@@ -42,9 +38,9 @@ int main()
           cout << "Choose an option.." << endl;
           cout << "1 : Add new contact." << endl; 
           cout << "2 : View all contacts." << endl;
-          cout << "3 : Delete a contacts." << endl;
-          cout << "4 : Search a contact by Name." << endl;
-          cout << "5 : Search a contact by Phone Number." << endl;
+          cout << "3 : Search a contact by Name." << endl;
+          cout << "4 : Search a contact by Phone Number." << endl;
+          cout << "5 : Delete a contacts." << endl;
           cout << "6 : End Program. " << endl;
 
           cout << endl << "Your option : ";
@@ -81,7 +77,6 @@ int main()
 /*   if the user enters any number except 1 to 6, the below statements will be printed.
 *    getch will pause the screen and wait till user presses any key to restart the program. */
           default:
-
                cout << "You have not entered the correct option!!" << endl;
                cout << "Please enter a number between 1 to 6." << endl;
                cout << "Press any key to continue..." << endl;
