@@ -1,53 +1,45 @@
-//  CONTACT MANAGEMENT;
+//   USE CHAR 2D ARRAY FOR NAME INSTEAD OF STRING ARRAY 
+//   PROBLEM IN STORING NAME INSIDE CLASS
 #include<iostream>
 #include<string.h>
 #include<conio.h>
 #include<stdlib.h>
 #include <iomanip> 
-#include<vector>
+
 using namespace std;
 
 class AddressBook
 {
-     string name[10][10];
-     double contactNum;
+     char name[10][10];
+     string firstName, lastName;
+     string contactNum;
 
      public:
-     int sizeOfName = name[10][10].size();
-     int sizeOfNum = sizeof(sizeOfNum);
+     int sizeOfName ;
+     int sizeOfNum = sizeof(sizeOfNum); 
 
-//        USE CHAR 2D ARRAY FOR NAME INSTEAD OF STRING ARRAY 
 
-     void getNameAndNumber(string userName,double userNum)
+     void getNameAndNumber(string fName, string lName, string userNum)
      {
-          for (int i = 0; i < sizeOfName; i++)
-          {
-               for (int j = 0; j < sizeOfName; j++)
-               {
-                    name[i][j] = userName[j];
-               }
-               
-          }
-          
-          
-          // name = userName;
+          firstName = fName;
+          lastName = lName;
           contactNum = userNum;
      }
      void putNameAndNumber()
      {
-          cout << "Your name is : " << name << endl;
+          cout << "Your name is : " << firstName<< " " << lastName << ".\n";
           cout << "Your Contact number is " << contactNum << endl;
      }
 };
 int main()
-//   PROBLEM IN STORING NAME INSIDE CLASS
 {
      system("cls");
      int decision = 0;
      int opt;
      AddressBook userOne;
-     string newName;
-     double contactNumber;
+     string firstName, lastName;
+     string contactNumber;
+
      while (decision != 1)
      {
            cout << setw (25);
@@ -70,15 +62,15 @@ int main()
 /*   Case 1 : for adding new contact to our phone book we have called a public function
 *    which will store the name and number as private in class. */
           case 1:
-               cout << "Enter your Name." << endl;
-               getline (cin, newName);
-               cin.ignore(256, '\n'); 
+               cout << "Enter First Name." << endl;
+               cin >> firstName;
+               cout << "\nEnter Last Name." << endl;
+               cin >> lastName;
 
-               cout << "Enter contact Number." <<endl;
+               cout << "\nEnter contact Number." <<endl;
                cin >> contactNumber;
                
-               
-               userOne.getNameAndNumber(newName, contactNumber);
+               userOne.getNameAndNumber(firstName, lastName, contactNumber);
                cout << endl << "Contact added successfully !!" << endl;
                break;
           
