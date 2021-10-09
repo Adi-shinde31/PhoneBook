@@ -1,21 +1,17 @@
-//   USE CHAR 2D ARRAY FOR NAME INSTEAD OF STRING ARRAY 
-//   PROBLEM IN STORING NAME INSIDE CLASS
 #include<iostream>
 #include<string.h>
 #include<conio.h>
 #include<stdlib.h>
-#include <iomanip> 
 
 using namespace std;
 
 class AddressBook
 {
-     char name[10][10];
      string firstName, lastName;
      string contactNum;
 
      public:
-     int sizeOfName ;
+     int sizeOfName;
      int sizeOfNum = sizeof(sizeOfNum); 
 
 
@@ -42,7 +38,6 @@ int main()
 
      while (decision != 1)
      {
-           cout << setw (25);
           cout << "\t\t\t\t\t\t****| CONTACT MANAGEMENT |****" << endl << endl;
           cout << "Choose an option.." << endl;
           cout << "1 : Add new contact." << endl; 
