@@ -9,70 +9,15 @@ using namespace std;
 
 class AddressBook
 {
-     string firstName[MAXSIZE], lastName[MAXSIZE];
+     string firstName[MAXSIZE], lastName[MAXSIZE];     
      string contactNum[MAXSIZE];
 
      public:
-     void getNameAndNumber(string fName, string lName, string userNum)
-     {
-          for (int i = 0; i < 1; i++)
-          {
-               firstName[i] = fName;
-               lastName[i] = lName;
-               contactNum[i] = userNum;
-          }
-     }
-     void putNameAndNumber()
-     {
-          for (int i = 0; i < 1; i++)
-          {
-               cout << "Your name is : " << firstName[i]<< " " << lastName[i] << ".\n";
-               cout << "Your Contact number is " << contactNum[i] << endl;
-          }
-          
-     }
-     void searchNumber(int s)
-     {
-          if (s == 1)
-          {
-               string fname, lname;
-               string num;
-               cout << "Enter first name the person." << endl;
-               cin >> fname;
-               cout << "Enter last name of the person." << endl;
-               cin >> lname;
-               
-               for (int i = 0; i < MAXSIZE; i++)
-               {
-                    if (fname == firstName[i] && lname == lastName[i])
-                    {
-                         cout << endl << contactNum[i] << " is the Contact number of " << firstName[i] << " " << lastName[i] << ".\n";
-                    }
-               }
-
-          }
-          else if(s == 2)
-          {
-               string num;
-               cout << "Enter contact number of the person." << endl;
-               cin >> num;
-               for (int i = 0; i < MAXSIZE; i++)
-               {
-                    if (num == contactNum[i])
-                    {
-                         cout << endl << firstName[i] << " " << lastName[i] << " is the Name of the Contact number " << contactNum[i] <<".\n";
-                    }
-               }
-          }
-          else
-          {
-               cout << "Enter a valid Number.\n";
-               cout << "Press any key to continue..." << endl;
-               getch();
-               system("cls");
-          }
-     }
+     void getNameAndNumber(string fName, string lName, string userNum);
+     void putNameAndNumber();
+     void searchNumber(int s);
 };
+
 
 int main()
 {
@@ -170,5 +115,66 @@ int main()
                system("cls");
                break;
           }         
+     }
+}
+
+
+void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
+{
+     for (int i = 0; i < 1; i++)
+     {
+          firstName[i] = fName;
+          lastName[i] = lName;
+          contactNum[i] = userNum;
+     }
+}
+
+void AddressBook::putNameAndNumber()
+{
+     for (int i = 0; i < 1; i++)
+     {
+          cout << "Your name is : " << firstName[i]<< " " << lastName[i] << ".\n";
+          cout << "Your Contact number is " << contactNum[i] << endl;
+     }
+}
+    
+void AddressBook::searchNumber(int s)
+{
+     if (s == 1)
+     {
+          string fname, lname;
+          string num;
+          cout << "Enter first name of the person." << endl;
+          cin >> fname;
+          cout << "Enter last name of the person." << endl;
+          cin >> lname;
+          
+          for (int i = 0; i < MAXSIZE; i++)
+          {
+               if (fname == firstName[i] && lname == lastName[i])
+               {
+                    cout << endl << contactNum[i] << " is the Contact number of " << firstName[i] << " " << lastName[i] << ".\n";
+               }
+          }
+     }
+     else if(s == 2)
+     {
+          string num;
+          cout << "Enter contact number of the person." << endl;
+          cin >> num;
+          for (int i = 0; i < MAXSIZE; i++)
+          {
+               if (num == contactNum[i])
+               {
+                    cout << endl << firstName[i] << " " << lastName[i] << " is the Name of the Contact number " << contactNum[i] <<".\n";
+               }
+          }
+     }
+     else
+     {
+          cout << "Enter a valid Number.\n";
+          cout << "Press any key to continue..." << endl;
+          getch();
+          system("cls");
      }
 }
