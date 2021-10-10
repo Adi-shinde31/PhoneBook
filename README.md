@@ -4,3 +4,6 @@ In this project, I have made a Simple PhoneBook Management System in which the u
 
 User can also end the program in between if they want to. 
 I have used some concepts of OOP with C++ to make it run fast.
+
+## PROJECT IS NOT YET COMPLETED!!
+## MANY MORE CHANGES WILL BE APPLIED SOON :)
