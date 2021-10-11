@@ -142,10 +142,9 @@ void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
 
 void AddressBook::putNameAndNumber()
 {
-     for (int i = 0; i < 1; i++)
+     for (int i = 0; i < MAXSIZE; i++)
      {
-          cout << "Your name is : " << firstName[i]<< " " << lastName[i] << ".\n";
-          cout << "Your Contact number is " << contactNum[i] << endl;
+          cout << i+1 << " : Name = " << firstName[i] << " " << lastName[i] <<  ", Contact Number = " << contactNum[i] <<  "\n";
      }
 }
     
