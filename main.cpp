@@ -16,12 +16,13 @@ class AddressBook
      void getNameAndNumber(string fName, string lName, string userNum);
      void putNameAndNumber();
      void searchNumber(int s);
+     void deleteContact();
 };
 
 
 int main()
 {
-     system("cls");
+     // system("cls");
      int decision = 0;
      int opt;
      AddressBook userOne;
@@ -30,9 +31,10 @@ int main()
 
      while (decision != 1)
      {
+          system("cls");
           cout << "\t\t\t\t\t\t****| CONTACT MANAGEMENT |****" << endl << endl;
-          cout << "Choose an option.." << endl;
-          cout << "1 : Add new contact." << endl; 
+          cout << "Choose an option..\n" << endl;
+          cout << "1 : Add new contact." << endl;  
           cout << "2 : View all contacts." << endl;
           cout << "3 : Search a contact." << endl;
           cout << "4 : Make a file of saved contacts." << endl;
@@ -58,7 +60,7 @@ int main()
                     P06 - CLEAR TERMINAL FREQUENTLY  
                     P07 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
                     */
-
+               system("cls");
                cout << "Enter First Name." << endl;
                cin >> firstName;
                cout << "\nEnter Last Name." << endl;
@@ -69,11 +71,15 @@ int main()
                
                userOne.getNameAndNumber(firstName, lastName, contactNumber);
                cout << endl << "Contact added successfully !!" << endl;
+               cout << "Press any key to continue.." <<endl;
+               getch();
                break;
           
           case 2:
           // VIEW ALL CONTACTS
                userOne.putNameAndNumber();
+               cout << "Press any key to continue.." <<endl;
+               getch();
                break;
  
           case 3:
@@ -86,7 +92,8 @@ int main()
                
                cin >> search;
                userOne.searchNumber(search);
-               
+               cout << "Press any key to continue.." <<endl;
+               getch();
 
                break;
           case 4:
@@ -95,7 +102,11 @@ int main()
                break;
           case 5:
           // DELETE A CONTACT.
-
+          //   transfer of control bypasses initialization of: -- variable 
+               // string delContact;
+               char delContact;
+               cout << "Which Number or Name you want to delete ?" << endl;
+               
                break;
           case 6:
           // EXIT PROGRAM
@@ -177,4 +188,9 @@ void AddressBook::searchNumber(int s)
           getch();
           system("cls");
      }
+}
+
+void AddressBook::deleteContact()
+{
+
 }
