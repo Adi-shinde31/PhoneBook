@@ -9,20 +9,27 @@ using namespace std;
 
 class AddressBook
 {
-     string firstName[MAXSIZE], lastName[MAXSIZE];     
-     string contactNum[MAXSIZE];
+     static string firstName[MAXSIZE], lastName[MAXSIZE];     
+     static string contactNum[MAXSIZE];
 
      public:
+     static int inputCount, outputCount;
+
      void getNameAndNumber(string fName, string lName, string userNum);
      void putNameAndNumber();
      void searchNumber(int s);
      void deleteContact();
 };
 
+string AddressBook::firstName[]={""};
+string AddressBook::lastName[]={""};
+string AddressBook::contactNum[]={""};
+int AddressBook::inputCount = 0;
+int AddressBook::outputCount = 0;
+
 
 int main()
 {
-     // system("cls");
      int decision = 0;
      int opt;
      AddressBook userOne;
@@ -132,12 +139,10 @@ int main()
 
 void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
 {
-     for (int i = 0; i < 1; i++)
-     {
-          firstName[i] = fName;
-          lastName[i] = lName;
-          contactNum[i] = userNum;
-     }
+          firstName[inputCount] = fName;
+          lastName[inputCount] = lName;
+          contactNum[inputCount] = userNum;
+          inputCount++;
 }
 
 void AddressBook::putNameAndNumber()
