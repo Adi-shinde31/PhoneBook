@@ -18,7 +18,7 @@ class AddressBook
      void getNameAndNumber(string fName, string lName, string userNum);
      void putNameAndNumber();
      void searchNumber(int s);
-     void deleteContact();
+     void deleteContact(string dName, string dSurname);
 };
 
 string AddressBook::firstName[]={""};
@@ -32,14 +32,12 @@ int main()
 {
      int decision = 0;
      int opt;
-     AddressBook userOne;
-     string firstName, lastName;
-     string contactNumber;
+     AddressBook user;
 
      while (decision != 1)
      {
           system("cls");
-          cout << "\t\t\t\t\t\t****| CONTACT MANAGEMENT |****" << endl << endl;
+          cout << "\t\t\t\t****| CONTACT MANAGEMENT |****" << endl << endl;
           cout << "Choose an option..\n" << endl;
           cout << "1 : Add new contact." << endl;  
           cout << "2 : View all contacts." << endl;
@@ -67,24 +65,29 @@ int main()
                     P06 - CLEAR TERMINAL FREQUENTLY  
                     P07 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
                     */
-               system("cls");
-               cout << "Enter First Name." << endl;
-               cin >> firstName;
-               cout << "\nEnter Last Name." << endl;
-               cin >> lastName;
+               {
+                    system("cls");
+                    string firstName, lastName;
+                    string contactNumber;
 
-               cout << "\nEnter contact Number." <<endl;
-               cin >> contactNumber;
-               
-               userOne.getNameAndNumber(firstName, lastName, contactNumber);
-               cout << endl << "Contact added successfully !!" << endl;
-               cout << "Press any key to continue.." <<endl;
-               getch();
+                    cout << "Enter First Name." << endl;
+                    cin >> firstName;
+                    cout << "\nEnter Last Name." << endl;
+                    cin >> lastName;
+
+                    cout << "\nEnter contact Number." <<endl;
+                    cin >> contactNumber;
+
+                    user.getNameAndNumber(firstName, lastName, contactNumber);
+                    cout << endl << "Contact added successfully !!" << endl;
+                    cout << "Press any key to continue.." <<endl;
+                    getch();
+               }
                break;
           
           case 2:
           // VIEW ALL CONTACTS
-               userOne.putNameAndNumber();
+               user.putNameAndNumber();
                cout << "Press any key to continue.." <<endl;
                getch();
                break;
@@ -98,7 +101,7 @@ int main()
                cout << endl << "Your option : ";
                
                cin >> search;
-               userOne.searchNumber(search);
+               user.searchNumber(search);
                cout << "Press any key to continue.." <<endl;
                getch();
 
@@ -109,10 +112,20 @@ int main()
                break;
           case 5:
           // DELETE A CONTACT.
-          //   transfer of control bypasses initialization of: -- variable 
-               // string delContact;
-               char delContact;
-               cout << "Which Number or Name you want to delete ?" << endl;
+               {
+                    string delName, delSurname;
+
+                    cout << "Enter first name of the person." << endl;
+                    cin >> delName;
+                    cout << "Enter last name of the person." << endl;
+                    cin >> delSurname;
+                    
+                    user.deleteContact(delName, delSurname);
+                    cout<< "Contact deleted Successfully !!" << endl;
+                    cout << "Press any key to continue..." << endl;
+                    getch();
+               }
+
                
                break;
           case 6:
@@ -194,7 +207,15 @@ void AddressBook::searchNumber(int s)
      }
 }
 
-void AddressBook::deleteContact()
+void AddressBook::deleteContact(string dName, string dSurname)
 {
-
+     for (int i = 0; i < MAXSIZE; i++)
+     {
+          if (dName == firstName[i] && dSurname == lastName[i])
+          {
+               firstName[i] = "EMPTY";          
+               lastName[i] = "";   
+               contactNum[i] = "EMPTY";
+          }
+     }
 }
