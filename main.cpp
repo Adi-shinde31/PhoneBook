@@ -2,6 +2,8 @@
 #include<string.h>
 #include<conio.h>
 #include<stdlib.h>
+#include<fstream>
+#include<filesystem>
 
 #define MAXSIZE 10
 
@@ -19,6 +21,7 @@ class AddressBook
      void putNameAndNumber();
      void searchNumber(int s);
      void deleteContact(string dName, string dSurname);
+     void makeFile();
 };
 
 string AddressBook::firstName[]={""};
@@ -61,9 +64,13 @@ int main()
                     P02 - CONTACT AS INTEGER
                     P03 - SEPARATE FUNC FOR VALUES
                     P04 - FILE I/O FOR STORING DATA
-                    P05 - INITIALIZING STATIC DATA MEMBER
-                    P06 - CLEAR TERMINAL FREQUENTLY  
-                    P07 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
+                    P05 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
+                    P06 - CHECK "EMPTY" BEFORE/AFTER ADDING NEW CONTACT
+                    P07 - EXISTING NAME OF CONTACT
+                    P08 - SEPARATE FUNC FOR DEFAULT LINES
+                    P09 - STRING SENSITIVITY INDEPENDENT
+                    P10 - EMPTY BY DEFAULT 
+                    P11 - CHECK EMPTY BEFORE ADDING
                     */
                {
                     system("cls");
@@ -108,7 +115,9 @@ int main()
                break;
           case 4:
           // MAKE A FILE OF SAVED CONTACTS
-
+               user.makeFile();
+               cout << "Press any key to continue..." << endl;
+               getch();
                break;
           case 5:
           // DELETE A CONTACT.
@@ -219,3 +228,85 @@ void AddressBook::deleteContact(string dName, string dSurname)
           }
      }
 }
+
+
+void AddressBook::makeFile()
+{
+     int checkFileName = 0;
+     ofstream printFile;
+
+     string fileName;
+     cout << "Enter file Name.\n";
+     cin >> fileName;
+     int isFileExists(string, int);
+
+     // if (printFile.is_open() == NULL)
+     while (checkFileName == 0)
+     {
+          if (isFileExists(fileName,checkFileName))
+          {
+               int fileOpt;
+               cout << "\nThe name of the file already exists!!\n";
+               cout << "1: Rewrite data.\n";
+               cout << "2: Create a file with another name.\n";
+
+               cout << endl << "Your option : ";
+               cin >> fileOpt;
+               if (fileOpt == 1)
+               {
+                    printFile.open(fileName, ios::trunc);
+                    for (int i = 0; i < MAXSIZE; i++)
+                    {
+                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+                    }
+                    cout << "Data has been re-written in " << fileName << ".\n";
+                    checkFileName++;
+                    //   clear
+               }
+               else
+               {
+                    cout << "Enter new file name.\n";
+                    cin >> fileName;
+                    isFileExists(fileName,checkFileName);
+                    printFile.open(fileName, ios::trunc);
+                    for (int i = 0; i < MAXSIZE; i++)
+                    {
+                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+                    }
+                    cout <<"File Created !!\n"; 
+                    checkFileName++;
+               }
+
+          }
+          else
+          {
+               printFile.open(fileName, ios::trunc);
+
+               for (int i = 0; i < MAXSIZE; i++)
+               {
+                    printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+               }
+               cout <<"File Created !!\n";
+               checkFileName++;
+          }
+     }
+
+     
+
+     printFile.close();
+}
+
+int isFileExists(string name, int checkFileName)
+{
+     
+     if (name == "TEXT.txt" || name == "hello.txt" || name == "hello1.txt" || name == "hello2.txt" )
+     {    
+          return 1; // return if true
+     }
+     else
+     {
+          checkFileName++;
+          return 0; // return if false
+     }
+}
+
