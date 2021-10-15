@@ -4,6 +4,7 @@
 #include<stdlib.h>
 #include<fstream>
 #include<filesystem>
+#include<direct.h>
 
 #define MAXSIZE 10
 
@@ -247,12 +248,15 @@ void AddressBook::deleteContact(string dName, string dSurname)
 void AddressBook::makeFile()
 {
      int checkFileName = 0;
-     ofstream printFile;
-
      string fileName;
+     string path= "c:/CodeHere/";
+     int isFileExists(string, int);
+     
+     _mkdir("c:/CodeHere");
+     ofstream printFile(path);
+
      cout << "Enter file Name.\n";
      cin >> fileName;
-     int isFileExists(string, int);
 
      while (checkFileName == 0)
      {
@@ -267,32 +271,37 @@ void AddressBook::makeFile()
                cin >> fileOpt;
                if (fileOpt == 1)
                {
-                    printFile.open(fileName, ios::trunc);
+                    path.append(fileName);
+                    printFile.open(path, ios::trunc);
                     for (int i = 0; i < MAXSIZE; i++)
                     {
-                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+                         printFile << firstName[i] << " " << lastName[i] << " : " << contactNum[i] << endl;
                     }
-                    cout << "\nData has been re-written in " << fileName << ".\n";
+                    cout << "\nData has been re-written in " << path << ".\n";
                     checkFileName++;
                }
                else
                {
                     cout << "Enter new file name.\n";
                     cin >> fileName;
-                    isFileExists(fileName,checkFileName);
-                    printFile.open(fileName, ios::trunc);
-                    for (int i = 0; i < MAXSIZE; i++)
+
+                    if(!(isFileExists(fileName,checkFileName)))
                     {
-                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+                         path.append(fileName);
+                         printFile.open(path, ios::trunc);
+                         for (int i = 0; i < MAXSIZE; i++)
+                         {
+                              printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
+                         }
+                         cout <<"File Created !!\n"; 
+                         checkFileName++;
                     }
-                    cout <<"File Created !!\n"; 
-                    checkFileName++;
                }
           }
           else
           {
-               printFile.open(fileName, ios::trunc);
-               AddressBook obj;
+               path.append(fileName);
+               printFile.open(path, ios::trunc);
 
                for (int i = 0; i < MAXSIZE; i++)
                {
@@ -310,7 +319,9 @@ void AddressBook::makeFile()
 
 int isFileExists(string name, int checkFileName)
 {
-     if (name == "TEXT.txt" || name == "hello.txt" || name == "hello1.txt" || name == "hello2.txt" )
+     string path = "c:/CodeHere/";
+     path.append(name);
+     if (path == "c:/CodeHere/TEXT.txt" || path == "c:/CodeHere/hello.txt" || path == "c:/CodeHere/hello1.txt" || path == "c:/CodeHere/hello2.txt" )
      {    
           return 1; // return if true
      }
