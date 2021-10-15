@@ -240,7 +240,6 @@ void AddressBook::makeFile()
      cin >> fileName;
      int isFileExists(string, int);
 
-     // if (printFile.is_open() == NULL)
      while (checkFileName == 0)
      {
           if (isFileExists(fileName,checkFileName))
@@ -259,9 +258,8 @@ void AddressBook::makeFile()
                     {
                          printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                     }
-                    cout << "Data has been re-written in " << fileName << ".\n";
+                    cout << "\nData has been re-written in " << fileName << ".\n";
                     checkFileName++;
-                    //   clear
                }
                else
                {
@@ -281,9 +279,12 @@ void AddressBook::makeFile()
           else
           {
                printFile.open(fileName, ios::trunc);
+               
 
                for (int i = 0; i < MAXSIZE; i++)
                {
+                    if (contactNum[i]=="EMPTY")
+                         continue;
                     printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                }
                cout <<"File Created !!\n";
