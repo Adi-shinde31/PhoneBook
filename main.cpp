@@ -7,29 +7,27 @@
 
 #define MAXSIZE 10
 
+int inputCount = 0;
 using namespace std;
 
 class AddressBook
 {
+private:
      static string firstName[MAXSIZE], lastName[MAXSIZE];     
      static string contactNum[MAXSIZE];
 
-     public:
-     static int inputCount, outputCount;
-
+public:
      void getNameAndNumber(string fName, string lName, string userNum);
      void putNameAndNumber();
      void searchNumber(int s);
      void deleteContact(string dName, string dSurname);
      void makeFile();
+     friend ofstream & operator<<(ofstream &printFile, AddressBook &refClass);
 };
 
 string AddressBook::firstName[]={""};
 string AddressBook::lastName[]={""};
 string AddressBook::contactNum[]={""};
-int AddressBook::inputCount = 0;
-int AddressBook::outputCount = 0;
-
 
 int main()
 {
@@ -60,35 +58,32 @@ int main()
 *    which will store the name and number as private in class. */
           case 1:
           // NEW CONTACT
-          /*        P01 - TAKE SINGLE STRING AS INPUT
+                    /*        
+                    P01 - TAKE SINGLE STRING AS INPUT
                     P02 - CONTACT AS INTEGER
                     P03 - SEPARATE FUNC FOR VALUES
-                    P04 - FILE I/O FOR STORING DATA
-                    P05 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
-                    P06 - CHECK "EMPTY" BEFORE/AFTER ADDING NEW CONTACT
-                    P07 - EXISTING NAME OF CONTACT
-                    P08 - SEPARATE FUNC FOR DEFAULT LINES
-                    P09 - STRING SENSITIVITY INDEPENDENT
-                    P10 - EMPTY BY DEFAULT 
-                    P11 - CHECK EMPTY BEFORE ADDING
+                    P04 - USE BUILT-IN FUNC FOR SEARCHING (AT) (IN)
+                    P05 - EXISTING NAME OF CONTACT
+                    P06 - SEPARATE FUNC FOR DEFAULT LINES
+                    P07 - STRING SENSITIVITY INDEPENDENT
+                    P08 - << OVERLOADING FUNCTION DECLARATIONS
+                    P09 - CHECK EXISTING FILE NAMES IN DIRECTORY
                     */
                {
-                    system("cls");
-                    string firstName, lastName;
-                    string contactNumber;
+                         string firstName, lastName;
+                         string contactNumber;
 
-                    cout << "Enter First Name." << endl;
-                    cin >> firstName;
-                    cout << "\nEnter Last Name." << endl;
-                    cin >> lastName;
+                         cout << "Enter First Name." << endl;
+                         cin >> firstName;
+                         cout << "\nEnter Last Name." << endl;
+                         cin >> lastName;
 
-                    cout << "\nEnter contact Number." <<endl;
-                    cin >> contactNumber;
+                         cout << "\nEnter contact Number." <<endl;
+                         cin >> contactNumber;
 
-                    user.getNameAndNumber(firstName, lastName, contactNumber);
-                    cout << endl << "Contact added successfully !!" << endl;
-                    cout << "Press any key to continue.." <<endl;
-                    getch();
+                         user.getNameAndNumber(firstName, lastName, contactNumber);
+                         cout << "Press any key to continue.." <<endl;
+                         getch();
                }
                break;
           
@@ -111,14 +106,15 @@ int main()
                user.searchNumber(search);
                cout << "Press any key to continue.." <<endl;
                getch();
-
                break;
+
           case 4:
           // MAKE A FILE OF SAVED CONTACTS
                user.makeFile();
                cout << "Press any key to continue..." << endl;
                getch();
                break;
+
           case 5:
           // DELETE A CONTACT.
                {
@@ -134,9 +130,8 @@ int main()
                     cout << "Press any key to continue..." << endl;
                     getch();
                }
-
-               
                break;
+
           case 6:
           // EXIT PROGRAM
                cout << "Program ended successfully!!" << endl;
@@ -150,21 +145,41 @@ int main()
                cout << "Please enter a number between 1 to 6." << endl;
                cout << "Press any key to continue..." << endl;
                getch();
-/*   if user enters a wrong value and if the value is not an integer the switch case will misbehave
-*/
+/*   if user enters a wrong value and if the value is not an integer the switch case will misbehave */
                system("cls");
                break;
           }         
      }
 }
 
-
 void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
-{
-          firstName[inputCount] = fName;
-          lastName[inputCount] = lName;
-          contactNum[inputCount] = userNum;
-          inputCount++;
+{    
+     for(int i = 0; i < MAXSIZE; i++)
+     {
+          if (contactNum[i] == "EMPTY")
+          {
+               firstName[i] = fName;
+               lastName[i] = lName;
+               contactNum[i] = userNum;
+               cout << endl << "Contact added successfully !!" << endl;
+               break;
+          }
+          else if(inputCount == MAXSIZE)
+          {
+               cout << "STORAGE FULL !!" << endl;
+               cout << "Delete some contacts to add more." << endl;   
+               break;  
+          }
+          else{
+               firstName[inputCount] = fName;
+               lastName[inputCount] = lName;
+               contactNum[inputCount] = userNum;
+               inputCount++;
+               cout << "cout after incr " << inputCount << endl;
+               cout << endl << "Contact added successfully !!" << endl;
+               break;
+          }
+     }    
 }
 
 void AddressBook::putNameAndNumber()
@@ -180,7 +195,6 @@ void AddressBook::searchNumber(int s)
      if (s == 1)
      {
           string fname, lname;
-          string num;
           cout << "Enter first name of the person." << endl;
           cin >> fname;
           cout << "Enter last name of the person." << endl;
@@ -274,12 +288,11 @@ void AddressBook::makeFile()
                     cout <<"File Created !!\n"; 
                     checkFileName++;
                }
-
           }
           else
           {
                printFile.open(fileName, ios::trunc);
-               
+               AddressBook obj;
 
                for (int i = 0; i < MAXSIZE; i++)
                {
@@ -290,16 +303,13 @@ void AddressBook::makeFile()
                cout <<"File Created !!\n";
                checkFileName++;
           }
-     }
-
-     
+     }    
 
      printFile.close();
 }
 
 int isFileExists(string name, int checkFileName)
 {
-     
      if (name == "TEXT.txt" || name == "hello.txt" || name == "hello1.txt" || name == "hello2.txt" )
      {    
           return 1; // return if true
@@ -311,3 +321,11 @@ int isFileExists(string name, int checkFileName)
      }
 }
 
+// ofstream & operator<<(ofstream &printFile, AddressBook &refClass)
+// {
+//      for (int i = 0; i < MAXSIZE; i++)
+//      {
+//           printFile << refClass.firstName[i] << " " << refClass.lastName[i] << "\t" << refClass.contactNum[i];
+//      }
+//      return printFile;
+// }
