@@ -23,7 +23,7 @@ public:
      void searchNumber(int s);
      void deleteContact(string dName, string dSurname);
      void makeFile();
-     friend ofstream & operator<<(ofstream &printFile, AddressBook &refClass);
+     // friend ofstream & operator<<(ofstream &printFile, AddressBook &refClass);
 };
 
 string AddressBook::firstName[]={""};
@@ -68,7 +68,6 @@ int main()
                     P06 - SEPARATE FUNC FOR DEFAULT LINES
                     P07 - STRING SENSITIVITY INDEPENDENT
                     P08 - << OVERLOADING FUNCTION DECLARATIONS
-                    P09 - CHECK EXISTING FILE NAMES IN DIRECTORY
                     */
                {
                          string firstName, lastName;
@@ -176,7 +175,6 @@ void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
                lastName[inputCount] = lName;
                contactNum[inputCount] = userNum;
                inputCount++;
-               cout << "cout after incr " << inputCount << endl;
                cout << endl << "Contact added successfully !!" << endl;
                break;
           }
@@ -244,7 +242,6 @@ void AddressBook::deleteContact(string dName, string dSurname)
      }
 }
 
-
 void AddressBook::makeFile()
 {
      int checkFileName = 0;
@@ -252,8 +249,8 @@ void AddressBook::makeFile()
      string path= "c:/CodeHere/";
      int isFileExists(string, int);
      
-     _mkdir("c:/CodeHere");
      ofstream printFile(path);
+     ofstream savedFileNames("data.txt", ios::app);
 
      cout << "Enter file Name.\n";
      cin >> fileName;
@@ -275,7 +272,7 @@ void AddressBook::makeFile()
                     printFile.open(path, ios::trunc);
                     for (int i = 0; i < MAXSIZE; i++)
                     {
-                         printFile << firstName[i] << " " << lastName[i] << " : " << contactNum[i] << endl;
+                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                     }
                     cout << "\nData has been re-written in " << path << ".\n";
                     checkFileName++;
@@ -287,7 +284,9 @@ void AddressBook::makeFile()
 
                     if(!(isFileExists(fileName,checkFileName)))
                     {
+                         _mkdir("c:/CodeHere");
                          path.append(fileName);
+                         savedFileNames << fileName << endl;
                          printFile.open(path, ios::trunc);
                          for (int i = 0; i < MAXSIZE; i++)
                          {
@@ -300,7 +299,9 @@ void AddressBook::makeFile()
           }
           else
           {
+               _mkdir("c:/CodeHere");
                path.append(fileName);
+               savedFileNames << fileName << endl;
                printFile.open(path, ios::trunc);
 
                for (int i = 0; i < MAXSIZE; i++)
@@ -315,21 +316,38 @@ void AddressBook::makeFile()
      }    
 
      printFile.close();
+     savedFileNames.close();
 }
 
 int isFileExists(string name, int checkFileName)
 {
+     string fpath = "c:/CodeHere/";
      string path = "c:/CodeHere/";
-     path.append(name);
-     if (path == "c:/CodeHere/TEXT.txt" || path == "c:/CodeHere/hello.txt" || path == "c:/CodeHere/hello1.txt" || path == "c:/CodeHere/hello2.txt" )
-     {    
-          return 1; // return if true
-     }
-     else
+     fpath.append(name);
+
+     ifstream checkFile("data.txt");
+     string txtfile;
+     int i;
+
+     while (i != MAXSIZE)
      {
-          checkFileName++;
-          return 0; // return if false
+          checkFile >> txtfile;
+          path.append(txtfile);
+
+          if (fpath == path)
+          {    
+               return 1; // return if true
+          }
+          else
+          {
+               checkFileName++;
+               return 0; // return if false
+          }
+          i++;
      }
+     
+     checkFile.close();
+     return 0;
 }
 
 // ofstream & operator<<(ofstream &printFile, AddressBook &refClass)
