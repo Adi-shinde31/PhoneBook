@@ -126,7 +126,7 @@ int main()
                     cin >> delSurname;
                     
                     user.deleteContact(delName, delSurname);
-                    cout<< "Contact deleted Successfully !!" << endl;
+                    cout<< "\nContact deleted Successfully !!" << endl;
                     cout << "Press any key to continue..." << endl;
                     getch();
                }
@@ -194,7 +194,7 @@ void AddressBook::searchNumber(int s)
      if (s == 1)
      {
           string fname, lname;
-          cout << "Enter first name of the person." << endl;
+          cout << "\nEnter first name of the person." << endl;
           cin >> fname;
           cout << "Enter last name of the person." << endl;
           cin >> lname;
@@ -210,7 +210,7 @@ void AddressBook::searchNumber(int s)
      else if(s == 2)
      {
           string num;
-          cout << "Enter contact number of the person." << endl;
+          cout << "\nEnter contact number of the person." << endl;
           cin >> num;
           for (int i = 0; i < MAXSIZE; i++)
           {
@@ -246,7 +246,7 @@ void AddressBook::makeFile()
 {
      int checkFileName = 0;
      string fileName;
-     string path= "c:/CodeHere/";
+     string path = "c:/CodeHere/";
      int isFileExists(string, int);
      
      ofstream printFile(path);
@@ -310,7 +310,7 @@ void AddressBook::makeFile()
                          continue;
                     printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                }
-               cout <<"File Created !!\n";
+               cout <<"\nFile Created !!\n";
                checkFileName++;
           }
      }    
@@ -321,29 +321,32 @@ void AddressBook::makeFile()
 
 int isFileExists(string name, int checkFileName)
 {
-     string fpath = "c:/CodeHere/";
-     string path = "c:/CodeHere/";
-     fpath.append(name);
+     // string fpath = "c:/CodeHere/";
+     // string path = "c:/CodeHere/";
+     // fpath.append(name);
 
      ifstream checkFile("data.txt");
      string txtfile;
-     int i;
-
+     int i = 0;
+     int count = 0;
      while (i != MAXSIZE)
      {
           checkFile >> txtfile;
-          path.append(txtfile);
+          // path.append(txtfile);
 
-          if (fpath == path)
+          if (name == txtfile)
           {    
                return 1; // return if true
-          }
-          else
-          {
-               checkFileName++;
-               return 0; // return if false
+               count++;
+               break;
           }
           i++;
+     }
+     if(count == 1)
+     {
+          checkFileName++;
+          return 0;
+          // break; // return if false
      }
      
      checkFile.close();
