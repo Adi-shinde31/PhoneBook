@@ -23,6 +23,8 @@ public:
      void searchNumber(int s);
      void deleteContact(string dName, string dSurname);
      void makeFile();
+     friend istream & operator>>(istream &in, AddressBook &c1);
+     friend ostream & operator<<(ostream &out, AddressBook &c1);
 };
 
 string AddressBook::firstName[] = {""};
@@ -123,7 +125,6 @@ int main()
                cout << "Please enter a number between 1 to 6." << endl;
                cout << "Press any key to continue..." << endl;
                getch();
-               system("cls");
                break;
           }
      }
@@ -198,6 +199,7 @@ void AddressBook::searchNumber(int s)
           string num;
           cout << "\nEnter contact number of the person." << endl;
           cin >> num;
+
           for (int i = 0; i < MAXSIZE; i++)
           {
                if (num == contactNum[i])
@@ -236,6 +238,7 @@ void AddressBook::makeFile()
      string fileName;
      string path = "c:/CodeHere/";
      int isFileExists(string, int);
+     AddressBook userCopy;
 
      ofstream printFile(path);
      ofstream savedFileNames("data.txt", ios::app);
@@ -259,12 +262,8 @@ void AddressBook::makeFile()
                {
                     path.append(fileName);
                     printFile.open(path, ios::trunc);
-                    for (int i = 0; i < MAXSIZE; i++)
-                    {
-                         if (contactNum[i] == "EMPTY")
-                              continue;
-                         printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
-                    }
+                    printFile << userCopy;
+
                     cout << "\nData has been re-written in " << path << ".\n";
                     checkFileName++;
                }
@@ -279,12 +278,7 @@ void AddressBook::makeFile()
                          path.append(fileName);
                          savedFileNames << fileName << endl;
                          printFile.open(path, ios::trunc);
-                         for (int i = 0; i < MAXSIZE; i++)
-                         {
-                              if (contactNum[i] == "EMPTY")
-                                   continue;
-                              printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
-                         }
+                         printFile << userCopy;
                          cout << "\nFile has been created at "<< path << ".\n";
                          checkFileName++;
                     }
@@ -296,13 +290,7 @@ void AddressBook::makeFile()
                path.append(fileName);
                savedFileNames << fileName << endl;
                printFile.open(path, ios::trunc);
-
-               for (int i = 0; i < MAXSIZE; i++)
-               {
-                    if (contactNum[i] == "EMPTY")
-                         continue;
-                    printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
-               }
+               printFile << userCopy;
                cout << "\nFile has been created at "<< path << ".\n";
                checkFileName++;
           }
@@ -338,4 +326,15 @@ int isFileExists(string name, int checkFileName)
 
      checkFile.close();
      return 0;
+}
+
+ostream & operator<<(ostream &out, AddressBook &c1)
+{
+     for (int i = 0; i < MAXSIZE; i++)
+     {
+          if (c1.contactNum[i] == "EMPTY")
+               continue;
+          out << c1.firstName[i] << " " << c1.lastName[i] << "\t" << c1.contactNum[i] << endl;
+     }
+     return out;
 }
