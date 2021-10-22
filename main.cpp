@@ -139,23 +139,30 @@ void AddressBook::getNameAndNumber(string fName, string lName, string userNum)
                lastName[i] = lName;
                contactNum[i] = userNum;
                cout << endl << "Contact added successfully !!" << endl;
+               return ;
                break;
           }
-          else if (inputCount == MAXSIZE)
+     }
+     if (inputCount == MAXSIZE)
+     {
+          cout << "STORAGE FULL !!" << endl;
+          cout << "Delete some contacts to add more." << endl;
+          // break;
+     }
+     else
+     {
+          for (int i = 0; i < MAXSIZE; i++)    
           {
-               cout << "STORAGE FULL !!" << endl;
-               cout << "Delete some contacts to add more." << endl;
-               break;
+               if (contactNum[i] != "EMPTY")
+               {
+                    firstName[inputCount] = fName;
+                    lastName[inputCount] = lName;
+                    contactNum[inputCount] = userNum;
+                    break;
+               }
           }
-          else
-          {
-               firstName[inputCount] = fName;
-               lastName[inputCount] = lName;
-               contactNum[inputCount] = userNum;
-               inputCount++;
-               cout << endl << "Contact added successfully !!" << endl;
-               break;
-          }
+          cout << endl << "Contact added successfully !!" << endl;
+          inputCount++;
      }
 }
 
@@ -182,6 +189,7 @@ void AddressBook::searchNumber(int s)
                if (fname == firstName[i] && lname == lastName[i])
                {
                     cout << endl << contactNum[i] << " is the Contact number of " << firstName[i] << " " << lastName[i] << ".\n";
+                    break;
                }
           }
      }
@@ -195,6 +203,7 @@ void AddressBook::searchNumber(int s)
                if (num == contactNum[i])
                {
                     cout << endl << firstName[i] << " " << lastName[i] << " is the Name of the Contact number " << contactNum[i] << ".\n";
+                    break;
                }
           }
      }
@@ -216,6 +225,7 @@ void AddressBook::deleteContact(string dName, string dSurname)
                firstName[i] = "EMPTY";
                lastName[i] = "";
                contactNum[i] = "EMPTY";
+               break;
           }
      }
 }
@@ -251,6 +261,8 @@ void AddressBook::makeFile()
                     printFile.open(path, ios::trunc);
                     for (int i = 0; i < MAXSIZE; i++)
                     {
+                         if (contactNum[i] == "EMPTY")
+                              continue;
                          printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                     }
                     cout << "\nData has been re-written in " << path << ".\n";
@@ -269,9 +281,11 @@ void AddressBook::makeFile()
                          printFile.open(path, ios::trunc);
                          for (int i = 0; i < MAXSIZE; i++)
                          {
+                              if (contactNum[i] == "EMPTY")
+                                   continue;
                               printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                          }
-                         cout << "File Created !!\n";
+                         cout << "\nFile has been created at "<< path << ".\n";
                          checkFileName++;
                     }
                }
@@ -289,7 +303,7 @@ void AddressBook::makeFile()
                          continue;
                     printFile << firstName[i] << " " << lastName[i] << "\t" << contactNum[i] << endl;
                }
-               cout << "\nFile Created !!\n";
+               cout << "\nFile has been created at "<< path << ".\n";
                checkFileName++;
           }
      }
